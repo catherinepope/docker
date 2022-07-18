@@ -8,6 +8,7 @@ You cannot delete the image until the last container using it has been stopped a
 
 Images don't contain a kernel. All containers running on a Docker host share access to the host's kernel.
 
+Containers run until the app they are executing exits. For example, a Linux container exits when the Bash shell exits.
 
 Pull an image:
 
@@ -27,13 +28,17 @@ It should still be visible through this command:
 
 ```docker container ls```
 
-You can attach your shell to the terminal of a running container with the `docker container exec command`:
+You can attach your shell to the terminal of a running container with the `docker container exec` command:
 
 ```docker container exec -it inspiring_banzai bash```
 
 To stop the container:
 
 ```docker container stop inspiring_banzai```
+
+To restart the container:
+
+```docker container start inspiring_banzai```
 
 To remove the container:
 
@@ -44,3 +49,38 @@ To check the container is removed, run:
 ```docker container ls -a```
 
 The `-a` flag tells Docker to list *all* containers, even those in stopped state.
+
+To delete a running container with a single command:
+
+```docker container rm percy -f```
+
+But it's best practice to take the two-step approach of stopping then removing the container.
+
+## Self-Healing Containers with Restart Policies
+
+Restart policies can be configured:
+
+- imperatively on the command line as part of run commands
+- declaratively in YAML files for use with Docker Swarm, Docker Compose, and Kubernetes
+
+There are currently three types of restart policy:
+
+- always
+- unless-stopped
+- on-failed
+
+### always
+
+This policy always restarts a stopped container unless it has been explicitly stopped, such as via a `docker container stop` command.
+
+For example, if you exit from a container's shell, it kills the container. However, if you've set the `--restart always` policy, it'll restart automatically.
+
+If you explicitly stop a container with `docker container stop` and restart the Docker daemon, the container will be automatically restarted.
+
+### unless-stopped
+
+Unlike containers with the `--restart always` policy, those with an `unless-stopped` policy won't be restarted when the daemon restarts.
+
+### on-failure
+
+The `on-failure` policy restarts a containers if it exits with a non-zero exit code. It also restarts containers when the Docker daemon restarts, even containers that were in the stopped state.
