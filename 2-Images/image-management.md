@@ -1,5 +1,9 @@
 # Managing Images
 
+## Inspecting Images
+
+```docker image inspect <image-name>```
+
 ## Filtering Images
 
 Use the `--filter` flag to filter the list of images returned by `docker image ls`.

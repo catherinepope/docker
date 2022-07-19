@@ -32,6 +32,8 @@ You can attach your shell to the terminal of a running container with the `docke
 
 ```docker container exec -it inspiring_banzai bash```
 
+This `exec` command runs a *new* process inside a running container. This means the container won't stop when you exit it.
+
 To stop the container:
 
 ```docker container stop inspiring_banzai```
@@ -84,3 +86,12 @@ Unlike containers with the `--restart always` policy, those with an `unless-stop
 ### on-failure
 
 The `on-failure` policy restarts a containers if it exits with a non-zero exit code. It also restarts containers when the Docker daemon restarts, even containers that were in the stopped state.
+
+## Inspecting Containers
+
+```docker image inspect <image-name>```
+
+The command above allows you to see what the container is designed to run, unless you override it with different instructions. Sometimes the default app is listed as `ENTRYPOINT` instead of `CMD`.
+
+![Inspecting an image](cmd.png)
+
