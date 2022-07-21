@@ -227,3 +227,26 @@ You can:
 - Get extra details `--details`
 
 ## Backing Up a Swarm
+
+Backing up a swarm backs up the control plane objects required to recover the swarm in the event of failure or corruption.
+
+Swarm configuration and state is stored in `var/lib/docker/swarm` on every manager node. A swarm backup is a copy of all the files in this directory.
+
+You need to stop the Docker daemon on the node you are backing up, so it's a good idea to perform the backup from non-leader managers.
+
+Backup process:
+
+1. Stop Docker on a non-leader swarm manager (`service docker stop`)
+2. Back up the Swarm config
+3. Verify the backup file exists
+4. Restart Docker (`service docker restart`)
+
+## Restoring a Backup
+
+- You can only restore to a node running the same version of Docker the backup was performed on.
+- You can only restore to a node with the same IP address as the node the backup was performed on.
+
+1. Restore the Swarm configuration from backup.
+2. Start Docker (`docker service start`)
+3. Initialize a new Swarm cluster. The `--force-new-cluster` flag tells Docker to create a new cluster using the configuration stored in `/var/lib/docker/swarm/` that you recovered in step 1.
+4. Add new manager and worker nodes.
