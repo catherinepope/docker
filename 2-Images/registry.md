@@ -12,7 +12,7 @@ Image registries contain one or more *image repositories*.
 
 The `docker search` command lets you search Docker Hub from the CLI:
 
-```docker search catherinepope```
+```docker search nginx```
 
 You can use a filter to ensure only official repos are displayed:
 
@@ -79,3 +79,40 @@ To delete all images:
 ```docker image rm -f $(docker image ls -q)```
 
 The `-q` flag returns a list of just the image IDs.
+
+## Pushing Your Images
+
+If you are using Docker EE, the DTR is your local registry.
+
+First, tag your image:
+
+`docker image tag testimagedockerfile <your username>/testimagedockerfile`
+
+Then log in:
+
+`docker login`
+
+Push your image
+
+`docker image push catherinepope/testimagedockerfile`
+
+
+## Creating a Local Registry
+
+This command pulls an image from Docker Hub to run a local registry:
+
+`docker run -d -p 5000:5000 --restart=always --name registry registry:2`
+
+You can then push and pull images to and from your local registry. 
+
+In this example, I'm pulling an existing image from Docker Hub, renaming it, pushing it to my local registry, then pulling it from there:
+
+```
+docker pull busybox
+
+docker tag busybox localhost:5000/firstapp
+
+docker push localhost:5000/firstapp
+
+docker pull localhost:5000/firstapp
+```

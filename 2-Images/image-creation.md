@@ -1,12 +1,20 @@
 # Creating Images
 
-To build an image:
+To build an image with a Dockerfile:
 
 ```docker image build -t test:latest .```
+
+You can also build an image with the `docker commit` command:
+
+`docker container commit <container-name> <image-name:tag>`
 
 To check the image is created:
 
 ```docker image ls```
+
+To see what image layers you've downloaded:
+
+`docker history <image-name>`
 
 To run the image as a container:
 
@@ -43,7 +51,7 @@ EXPOSE 8080
 ENTRYPOINT ["node", "./app.js"]
 ```
 
-`FROM` is the base layer of the image. If it's a Linux app, this must specify a Linux-based image. The base layer should be small, and preferably from an official source.
+`FROM` is the base layer of the image. If it's a Linux app, this must specify a Linux-based image. The base layer should be small, and preferably from an official source. If you want to create a new image with no parent image, use `FROM scratch`.
 
 `LABEL` is a key-value pair and a way of adding custom metadata to an image.
 
@@ -171,3 +179,5 @@ You can force the build process to ignore the entire cache by passing the `--no-
 `COPY` and `ADD` instructions include steps to ensure that the content copies to the image hasn't changed since the last build. Docker performs a checksum against each file copies and compares it to a checksum of the same file in the cached layer. If the checksums don't match, the cache is invalidated and a new layer is built. 
 
 If you're building Linux images and using the apt package manager, you should use the `no-install-recommends` flag with the `apt-get install` command - this ensures apt installs only main dependencies and not recommended or suggested packages.
+
+If you want to merge a Docker image to a single layer, you'd need to use `docker save ...` to make it into a tarball.

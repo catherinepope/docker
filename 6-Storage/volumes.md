@@ -22,6 +22,18 @@ This writable layers of local storage is managed on every Docker host by a stora
 - **SUSE Linux Enterprise Server**: Use the `btrfs` storage driver.
 - **Windows**: Has only one default driver.
 
+To share a volume between containers, use the `--volumes-from` option in the `docker run` subcommand.
+
+```
+docker run -it -v /vol1 --name first ubuntu bash
+# date > /vol1/file1
+# exit
+docker run -it --volumes-from first --name second ubuntu bash
+# cat /vol1/file1
+# echo more_data > /vol1/file2
+# exit
+```
+
 ## Persistent Data
 
 Volumes are the recommended way to persist data in containers.
@@ -61,3 +73,19 @@ If you specify a volume that doesn't exist, Docker creates if for you.
 For this to work, you need a volumes driver plugin that works with the external storage system.
 
 Once the plugin is registered, you can create new volumes from the storage system using `docker volume create` with the `-d` flag.
+
+
+## Filesystem vs Volume
+
+If you want to commit information to the image before pushing it to the repo, you must use a filesystem:
+
+```
+docker run -it -v /vol1 --name file_container ubuntu bash
+# mkdir new && cd new 
+# date > file1
+# exit
+docker commit file_container file_image
+docker run -it file_image
+```
+
+Never use volumes to store any data during build time. Instead, engrave the file system on the image.

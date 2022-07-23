@@ -1,5 +1,11 @@
 # Networking
 
+If you run `docker network ls`, the Docker engine creates three default networks for you:
+
+- **none:** the loopback (lo) interface for local communication within a container.
+- **host:** the container gets attached to the host network stack and shares the host's IP addresses and ports.
+- **bridge**: the default network if the network isn't configured using the `--net` option of the `docker run` subcommand.
+
 Docker networking is based on an open source pluggable architecture called the Container Network Model (CNM).
 
 `libnetwork` is Docker's real-world implementation of the CNM and it provides all Docker's core networking capabilities. Drivers plug into `libnetwork` to provide specific network topologies.
@@ -33,8 +39,8 @@ Drivers implement the data plane - connectivity, isolation, and network creation
 Docker ships with built-in drivers:
 
 - bridge
-- overlay
-- macvlan
+- overlay - when you initialize a swarm, Docker creates an ingress network that uses the `overlay` driver by default.
+- macvlan (Swarm)
 
 Each driver is in charge of the creation and management of all resources on the networks for which it's responsible. 
 

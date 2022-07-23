@@ -34,9 +34,27 @@ You can attach your shell to the terminal of a running container with the `docke
 
 This `exec` command runs a *new* process inside a running container. This means the container won't stop when you exit it.
 
+You can also use:
+
+`docker container attach <container-name>`
+
+Attach doesn't start a new process.
+
+To see everything that's been executed in the container:
+
+`docker logs <container-name>`
+
 To stop the container:
 
 ```docker container stop inspiring_banzai```
+
+You can also pause and unpause a container from another terminal:
+
+```
+docker container pause <container-name>
+
+docker container unpause <container-name>
+```
 
 To restart the container:
 
@@ -57,6 +75,10 @@ To delete a running container with a single command:
 ```docker container rm percy -f```
 
 But it's best practice to take the two-step approach of stopping then removing the container.
+
+To delete all containers:
+
+`docker container -rm -f $(docker container ls -aq)`
 
 ## Self-Healing Containers with Restart Policies
 

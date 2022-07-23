@@ -4,6 +4,17 @@
 
 ```docker image inspect <image-name>```
 
+This produces too much information!
+
+Filter the information. To get the architecture and operating system an image is compatible with:
+
+`docker image inspect --format='{{.Architecture}} {{.Os}}' testimage`
+
+To find dangling images:
+
+`docker image ls --filter dangling=true`
+
+
 ## Filtering Images
 
 Use the `--filter` flag to filter the list of images returned by `docker image ls`.
@@ -23,6 +34,12 @@ The following command returns only the size property of images on a Docker host:
 Use the following command to return all images, but display only the repo, tag, and size:
 
 ```docker image ls --format "{{.Repository}}: {{.Tag}}: {{.Size}}"```
+
+## Deleting Images
+
+`docker image rm <image-name>`
+
+`docker image rm -f $(docker image ls -q)`
 
 ## Pruning Images
 
