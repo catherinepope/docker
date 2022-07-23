@@ -7,7 +7,7 @@ This domain comprises **15%** of the exam.
 - [x] Describe default engine security.
 - [x] Describe swarm default security.
 - [ ] Describe MTLS.
-- [ ] Describe identity roles.
+- [x] Describe identity roles.
 - [x] Compare and contrast UCP workers and managers.
 - [ ] Describe the process to use external certificates with UCP and DTR.
 - [ ] Describe and demonstrate that an image passes a security scan.
