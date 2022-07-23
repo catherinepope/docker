@@ -19,8 +19,8 @@ Topics include:
 - [x] Apply node labels to demonstrate placement of tasks.
 - [x] Describe and demonstrate how to use templates with `docker service create`.
 - [ ] Identify the steps needed to troubleshoot a service not deploying.
-- [ ] Describe how a Dockerized application communicates with legacy systems.
-- [ ] Describe how to deploy containerized workloads as Kubernetes pods and deployments.
+- [x] Describe how a Dockerized application communicates with legacy systems.
+- [x] Describe how to deploy containerized workloads as Kubernetes pods and deployments.
 - [ ] Describe how to provide configuration to Kubernetes pods using configMaps and secrets.
 
 _I'll mark them as complete when I've covered these topics in my notes_
