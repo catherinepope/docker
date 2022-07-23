@@ -1,8 +1,8 @@
 Storage drivers are sometimes known as *graph drivers*. The appropriate storage driver often depends on your OS:
 
-- overlay2: current Ubuntu and CentOS
-- aufs: Ubuntu 14.04 and older
-- devicemaper: CentOS 7 and earlier.
+- **overlay2:** current Ubuntu and CentOS
+- **aufs:** Ubuntu 14.04 and older
+- **devicemaper:** CentOS 7 and earlier.
 
 ## Storage Models
 
