@@ -49,7 +49,22 @@ ENTRYPOINT ["node", "./app.js"]
 
 `RUN` runs a command and creates a new layer above the base layer (typically downloading and installing software, such as Node).
 
+`CMD` there are several difference between CMD and RUN:
+
+- The `CMD` is executed when you run a container from your image. The `RUN` instruction is executed during the build time of the image.
+- You can have only one `CMD` instruction in a Dockerflle. If you add more, only the last one takes effect. You can have as many `RUN` instructions as you need in the same Dockerfile.
+- You can add a health check to the CMD instruction, for example, `HEALTHCHECK CMD curl --fail http://localhost/health || exit 1`, which tells the Docker engine to kill the container with exit status 1 if the container health fails.
+- The `CMD` syntax uses this form [“param”, param”, “param”] when used in conjunction with the ENTRYPOINT instruction. It should be in the following form CMD [“executable”, "param1”, “param2”…] if used by itself.
+
+Example: `CMD "echo" "Hello World!"`
+
 `COPY` creates another new layer and copies the application and dependency files from the build context.
+
+`ADD` is similar to COPY, but there are some significant differences:
+
+- `ADD` supports URL handling, `COPY` doesn't.
+- `ADD` supports extra features, such as local-only tar extraction.
+- `ADD` supports regular expression handling, `COPY` doesn't.
 
 `WORKDIR` sets the working directory inside the image filesystem for the rest of the instructions in the file. This instruction doesn't create a new image layer.
 
@@ -57,7 +72,18 @@ ENTRYPOINT ["node", "./app.js"]
 
 `EXPOSE` exposes a web service on TCP port 8080. This is added as image metadata, not as a layer.
 
-`ENTRYPOINT` sets the main application that the image (container) should run. This is also metadata.
+`ENTRYPOINT` sets the main application that the image (container) should run. This is also metadata. `ENTRYPOINT` overrides the `CMD` instruction and `CMD`'s parameters are used as arguments to `ENTRYPOINT`, e.g:
+
+```
+CMD "This is my container"
+ENTRYPOINT echo
+```
+
+`ENV` sets the environment variables in the container, e.g. setting a log path other than the Docker Engine default, e.g. `ENV log_dir /var/log`.
+
+`USER` By default, the Docker engine sets the container’s user to root, which can be harmful. Actually, no one gives root privileges like that. Therefore, you should set a user ID and username for your container, e.g. `USER 75 engy`.
+
+`VOLUME` creates a directory in the image filesystem, which can later be used for mounting volumes from the Docker host or the other containers.
 
 If an instruction is adding *content*, such as files and programs to the image, it creates a new layer. If it is adding *instructions*, it creates metadata.
 
