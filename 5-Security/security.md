@@ -173,3 +173,12 @@ Secrets are:
 - operate under least-privilege model
 
 You can attach secrets to services by specifying the `--secret` flag to the `docker service create` command.
+## Transport Layer Security (TLS)
+
+TLS ensures authenticity of the registry endpoint and that traffic to/from the registry is encrypted.
+
+You use TLS (HTTPS) to protect the Docker daemon socket. If you need Docker to be reachable safely through HTTP rather than SSH, you can enable TLS be specifying the `tlsverify` flag and pointing Docker's `tlscacert` flag to a trusted CA certificate.
+
+To configure the Docker engine to use a registry that is not configured with TLS certificates from a trusted CA, pass the `--insecure-registry` flag to the dockerd daemon at runtime. Also, place the certificate in ’/etc/docker/certs.d/dtr.example com/ca.crt’ on all cluster nodes. These two steps will save you from receiving the error ’x509: certificate signed by unknown authority’.
+
+*For the exam, always remember the difference between DCT and TLS. The exam tries to confuse you about them.*
