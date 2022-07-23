@@ -14,10 +14,10 @@ Here's what it covers:
 - [x] Describe and demonstrate how to apply a file to create a Docker image.
 - [x] Describe and demonstrate how to display layers of a Docker image
 - [x] Describe and demonstrate how to modify an image to a single layer.
-- [ ] Describe and demonstrate registry functions.
+- [x] Describe and demonstrate registry functions.
 - [x] Deploy a registry.
-- [ ] Log into a registry.
-- [ ] Utilize search in a registry.
+- [x] Log into a registry.
+- [x] Utilize search in a registry.
 - [x] Push an image to a registry.
 - [x] Sign an image in a registry.
 - [x] Pull and delete images from a registry.
