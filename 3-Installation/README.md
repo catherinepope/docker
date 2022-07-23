@@ -2,10 +2,10 @@
 
 This domain comprises **15%** of the exam.
 
-- [ ] Describe sizing requirements for installation.
-- [ ] Describe and demonstrate the setup of repo, selection of a storage driver, and installation of the Docker engine on multiple platforms.
+- [x] Describe sizing requirements for installation.
+- [x] Describe and demonstrate the setup of repo, selection of a storage driver, and installation of the Docker engine on multiple platforms.
 - [x] Describe and demonstrate configuration of logging drivers (splunk, journald, etc.).
-- [ ] Describe and demonstrate how to set up swarm, configure managers, add nodes, and setup the backup schedule.
+- [x] Describe and demonstrate how to set up swarm, configure managers, add nodes, and setup the backup schedule.
 - [x] Describe and demonstrate how to create and manage user and teams.
 - [ ] Describe and demonstrate how to configure the Docker daemon to start on boot.
 - [ ] Describe and demonstrate how to use certificate-based client-server authentication to ensure a Docker daemon has the rights to access images on a registry.
