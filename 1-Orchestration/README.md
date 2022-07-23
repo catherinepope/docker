@@ -9,14 +9,14 @@ Topics include:
 - [x] Describe the importance of quorum in a swarm cluster.
 - [x] Describe the difference between running a container and running a service.
 - [x] Interpret the output of “docker inspect” commands.
-- [ ] Convert an application deployment into a stack file using a YAML compose file with "docker stack deploy".
+- [x] Convert an application deployment into a stack file using a YAML compose file with "docker stack deploy".
 - [x] Manipulate a running stack of services.
 - [x] Describe and demonstrate orchestration activities.
 - [x] Increase the number of replicas.
 - [x] Add networks, publish ports.
 - [x] Mount volumes.
 - [x] Describe and demonstrate how to run replicated and global services.
-- [ ] Apply node labels to demonstrate placement of tasks.
+- [x] Apply node labels to demonstrate placement of tasks.
 - [x] Describe and demonstrate how to use templates with `docker service create`.
 - [ ] Identify the steps needed to troubleshoot a service not deploying.
 - [ ] Describe how a Dockerized application communicates with legacy systems.
