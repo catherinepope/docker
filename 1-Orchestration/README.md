@@ -14,7 +14,7 @@ Topics include:
 - [x] Describe and demonstrate orchestration activities.
 - [x] Increase the number of replicas.
 - [x] Add networks, publish ports.
-- [ ] Mount volumes.
+- [x] Mount volumes.
 - [x] Describe and demonstrate how to run replicated and global services.
 - [ ] Apply node labels to demonstrate placement of tasks.
 - [x] Describe and demonstrate how to use templates with `docker service create`.
