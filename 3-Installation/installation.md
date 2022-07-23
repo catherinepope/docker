@@ -54,10 +54,11 @@ To fetch the driver type, run:
 docker inspect -f '{{.HostConfig.LogConfig.Type}}' <CONTAINER>
 ```
 
-## Backing Up UCP and DTR
+## Configure Docker to Start on Boot
 
-1. Back up the Docker Swarm
-2. Back up the UCP.
-3. Back up the DTR Images.
-4. Back up DTR metadata.
+Most current Linux distributions (RHEL, CentOS, Fedora, Debian, Ubuntu 16.04 and higher) use systemd to manage which services start when the system boots. On Debian and Ubuntu, the Docker service is configured to start on boot by default. To automatically start Docker and Containerd on boot for other distros, use the commands below:
 
+```
+ sudo systemctl enable docker.service
+ sudo systemctl enable containerd.service
+```
