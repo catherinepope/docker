@@ -29,6 +29,13 @@ You can switch between orchestrators in the UI.
 
 If you create a secret in your swarm, you can still access it using Kubernetes.
 
+#### Sizing Requirements
+
+- Minimum 8Gb memory and 2 CPUs for manager modes.
+- Recommended 16Gb memory and 4 CPUs for manager modes.
+- Mininum 4Gb memory for worker nodes.
+
+
 ## Configuration of Logging Drivers
 
 By default, Docker uses the json-file logging driver, which caches container logs as JSON internally.
@@ -45,3 +52,12 @@ To fetch the driver type, run:
 
 ```
 docker inspect -f '{{.HostConfig.LogConfig.Type}}' <CONTAINER>
+```
+
+## Backing Up UCP and DTR
+
+1. Back up the Docker Swarm
+2. Back up the UCP.
+3. Back up the DTR Images.
+4. Back up DTR metadata.
+

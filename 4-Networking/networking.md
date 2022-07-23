@@ -122,3 +122,17 @@ You need to use long form syntax for host mode:
 `mode=host` makes sure external requests only reach the service if they come in via nodes running a service replica.
 
 You'd normally use ingress mode. Behind the scenes, ingress mode uses a layer 4 routing mesh.
+
+## Configuring Docker to Use External DNS
+
+You can change the default for the host with the `dns` setting in `daemon.json`:
+
+```
+{
+    "dns": ["8.8.8.8"]
+}
+
+Or use the following command to run a container with a custom external DNS:
+
+`docker run --dns DNS_ADDRESS`
+

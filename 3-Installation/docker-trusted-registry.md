@@ -2,6 +2,11 @@
 
 When you install the UCP, you have access to install the DTR from the Admin Settings of the UCP.
 
+## Installation Requirements
+
+- Minimum 16Gb memory, 2 CPUs, 10Gb disk
+- Recommended 16Gb memory, 4 CPUs, 25-100Gb disk
+
 To install the DTR, you must have at least two nodes in your cluster. It won't work if you try to install it on the same node as the UCP - they both use port 443, so you'll be unable to access the DTR.
 
 ## Installing the DTR
