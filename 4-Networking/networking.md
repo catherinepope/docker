@@ -122,5 +122,3 @@ You need to use long form syntax for host mode:
 `mode=host` makes sure external requests only reach the service if they come in via nodes running a service replica.
 
 You'd normally use ingress mode. Behind the scenes, ingress mode uses a layer 4 routing mesh.
-
-`

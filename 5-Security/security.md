@@ -182,3 +182,11 @@ You use TLS (HTTPS) to protect the Docker daemon socket. If you need Docker to b
 To configure the Docker engine to use a registry that is not configured with TLS certificates from a trusted CA, pass the `--insecure-registry` flag to the dockerd daemon at runtime. Also, place the certificate in ’/etc/docker/certs.d/dtr.example com/ca.crt’ on all cluster nodes. These two steps will save you from receiving the error ’x509: certificate signed by unknown authority’.
 
 *For the exam, always remember the difference between DCT and TLS. The exam tries to confuse you about them.*
+
+## Mutually Authenticated Transport Layer Security (MTLS)
+
+- Both participants in communication exchange certificates and all communication is *authenticated* and *encrypted*.
+- When a swarm is initialized, a root certificate authority (CA) is create, which is used to generate certificates for all nodes as they join the cluster.
+- Worker and manager tokens are generated using the CA and are used to join new nodes to the cluster.
+- Used for all cluster-level communication between swarm nodes.
+- Enabled by default, you don't need to do anything to set it up.

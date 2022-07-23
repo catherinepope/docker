@@ -180,4 +180,8 @@ You can force the build process to ignore the entire cache by passing the `--no-
 
 If you're building Linux images and using the apt package manager, you should use the `no-install-recommends` flag with the `apt-get install` command - this ensures apt installs only main dependencies and not recommended or suggested packages.
 
-If you want to merge a Docker image to a single layer, you'd need to use `docker save ...` to make it into a tarball.
+If you want to merge a Docker image to a single layer, you'd need to use the following process:
+
+- Run a container from the image.
+- Export the container to an archive using `docker export`.
+- Import the archive as a new image using `docker import`.
