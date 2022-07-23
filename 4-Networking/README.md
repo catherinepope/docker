@@ -2,11 +2,11 @@
 
 This domain comprises **15%** of the exam.
 
-- [ ] Describe the Container Network Model and how it interfaces with the Docker engine and network and IPAM drivers.
+- [x] Describe the Container Network Model and how it interfaces with the Docker engine and network and IPAM drivers.
 - [x] Describe the different types and use cases for the built-in network drivers.
 - [ ] Describe the types of traffic that flow between the Docker engine, registry and UCP controllers.
 - [x] Describe and demonstrate how to create a Docker bridge network for developers to use for their containers.
-- [ ] Describe and demonstrate how to publish a port so that an application is accessible externally.
+- [x] Describe and demonstrate how to publish a port so that an application is accessible externally.
 - [x] Identify which IP and port a container is externally accessible on.
 - [x] Compare and contrast “host” and “ingress” publishing modes.
 - [ ] Describe and demonstrate how to configure Docker to use external DNS.
