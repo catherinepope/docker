@@ -1,5 +1,11 @@
 # Kubernetes
 
+You need to define a readiness probe on a Kubernetes Pod template definition if you want your container to be able to take itself down for maintenance.
+
+You should use a *job* to create Pods that are expected to terminate.
+
+To use a secret as an environment variable in the Pod definition, use `env[].valueFrom.secretKeyRef`.
+
 ## Manifest Files
 
 1.  **apiversion:** Indicates the version of the manifest file.
@@ -15,6 +21,8 @@ We use namespaces to allow several projects to share the same Kubernetes clust
 Generally, deployments are responsible for self-healing and scalability. Deployments manage replica sets, and replica sets manage pods.
 
 A Kubernetes service uses labels as nametags to identify pods and it can query these labels for service discovering and load-balancing. 
+
+You can reference a a secret from a Pod through the kubelet, when pulling images for the Pod.
 
 ### Kubernetes Networking
 

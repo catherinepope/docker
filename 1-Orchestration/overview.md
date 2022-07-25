@@ -4,12 +4,12 @@ Services are containers in production.
 
 Stacks are groups of interrelated services that share dependencies and can be scaled together.
 
+Steps when creating a service process in swarm mode: Docker API > orchestrator > allocator > dispatcher > scheduler
 
-## Troubleshooting a Service
+A dispatcher determines on which node a task is scheduled.
 
-First, get a task ID with `docker service ps <service-name>`.
+Swarmkit is a supported orchestrator in DockerEE.
 
-Next, check metadata with `docker inspect <task-id>`. In particular, Error message before container start is in the status field, and then confirm whether it was started with the intended parameters.
+*Placement Preference* is used to place services evenly on appropriate nodes in a swarm cluster.
 
-If the task has container ID, it was abnormally exited after starting the container, so check the log of the container with `docker logs <container-id>`.
-
+Use the `--update-delay` flag to introduce a delay between tasks during a rolling restart.
