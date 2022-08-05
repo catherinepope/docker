@@ -1,47 +1,108 @@
 # Storage in Kubernetes
-The storage in Kubernetes is defined over several phases. 
 
-The first phase is to have the physical storage connected to the cluster and define its drivers/plugins. The plugin is called the provisioner/Container Storage Interface (CSI), and the provider affords it with the storage disks.
+## PersistentVolumes
 
-The second phase is to make the Kubernetes cluster aware of these storage disks. To do that, you define a persistent volume (PV) YML file. 
+**PersistentVolumes** allow you to abstract storage resources. You define a set of available storage resources as a Kubernetes object, then later *claim* those storage resources for use in your pods.
 
-The third phase is using the volumes. The pods or the deployments do that by issuing a ticket to register the volume; we do that by creating a new object called the persistent volume claim (PVC). We create it also by writing a PVC YML file.
+A cluster administrator can create a set of PersistentVolumes, each containing the volume specification for the underlying storage system.
+
+A **PersistentVolumeReclaimPolicy** determines what happens when the associated claims are deleted:
+
+- **Retain** - keeps the volume and data and allows manual reclaiming. An admin is then responsible for cleaning up existing data.
+- **Delete** - deletes both the PersistentVolume and its underlying storage infrastructure (e.g. a cloud storage object).
+- **Recycle** - deletes the data so the volume can be reused.
 
 ```
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: <PV name>
+  name: pv0003
 spec:
-  accessModes:
-  - ReadWriteOnce
-  storageClassName: <sc name>
-  capacity:
-    storage: <storage size>
-  persistentVolumeReclaimPolicy: Retain
-  <provisioner parameters>
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /tmp
+    server: 172.17.0.2
+```
 
----
+## PersistentVolumeClaims
+
+Pods claim storage through a **PersistentVolumeClaim** (PVC). Kubernetes matches the PVC to a PersistentVolume.
+
+The PVC specification includes an access mode, storage amount, and storage class. If no storage class is specified, Kubernetes tries to find an existing PersistentVolume that satisfies the requirements of the claim.
+
+```
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: <PVC name>
+  name: myclaim
 spec:
-  accessModes:
-  - ReadWriteOnce
-  storageClassName: <same sc name as in the PV object>
-  resources:
-    requests:
-      storage: <same storage size as in the PV object>
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 8Gi
+  storageClassName: slow
+  selector:
+    matchLabels:
+      release: "stable"
+    matchExpressions:
+      - {key: environment, operator: In, values: [dev]}
 ```
 
-For scaling storage, Kubernetes offer another object called *storage class (SC)*. Storage classes create PVs dynamically. Therefore, we don't need to define the PV individually. It's similar to deployments in Kubernetes that create the pods.
+If there's a match, the PVC is bound to the PV. Once a PV is claimed, it is no longer available for any other PVCs to use.
+
+If there's no matching PV when you create a PVC, the claim is still created, but it's not usable. The pod remains pending until a PV is created that satisfies its requirements. A PVC needs to be bound before a pod can use it.
+
+Pods access storage by using the claim as a volume. The cluster finds the claim in the Pod's namespace and uses it to get the PersistentVolume backing the claim. The volume is then mounted to the host and into the Pod.
 
 ```
-kind: StorageClass
-apiVersion: storage.k8s.io/v1
+apiVersion: v1
+kind: Pod
 metadata:
-  name: <SC name>
+  name: mypod
+spec:
+  containers:
+    - name: myfrontend
+      image: nginx
+      volumeMounts:
+      - mountPath: "/var/www/html"
+        name: mypd
+  volumes:
+    - name: mypd
+      persistentVolumeClaim:
+        claimName: myclaim
+```
 
-<provisioner parameters>
+## Storage Classes
+
+For scaling storage, Kubernetes offer another object called *storage classes (SC)*. Storage classes create PVs dynamically. Therefore, we don't need to define the PV individually. In this dynamic provisioning workflow, you just create the PersistentVolumeClaim, and the required PersistentVolume is created on demand by the cluster.
+
+Clusters can be configured with multiple storage classes that reflect the different volume capabilities on offer, as well as a default storage class.
+
+PVCs can specify a storage class. If none is specified, the default is used.
+
+You can expand a PersistentVolumeClaim by simply specifying a larger size in the manifest. For this to work, the **storage class** must support volume expansion: **allowVolumeExpansion** should be set to `true`.
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: gluster-vol-default
+provisioner: kubernetes.io/glusterfs
+parameters:
+  resturl: "http://192.168.10.100:8080"
+  restuser: ""
+  secretNamespace: ""
+  secretName: ""
+allowVolumeExpansion: true
 ```
